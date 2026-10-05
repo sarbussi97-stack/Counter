@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Entertainment Counter</title>
+    <style>
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: #111; font-family: Arial, sans-serif;
+            overflow: hidden; color: white;
+        }
+        #orientation-warning {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #111; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            text-align: center; padding: 20px;
+        }
+        #app-container {
+            display: none; width: 100%; height: 100%;
+            justify-content: space-around; align-items: center; padding: 20px;
+        }
+        .counter-box {
+            display: flex; flex-direction: column; align-items: center;
+            background: #222; border-radius: 15px; padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); width: 45%; height: 90%;
+            justify-content: space-between;
+        }
+        .counter-box img {
+            width: 100%; height: 65%; object-fit: cover; border-radius: 10px;
+        }
+        .counter-value {
+            font-size: 4rem; font-weight: bold; margin: 10px 0;
+        }
+        .btn-container { display: flex; gap: 15px; width: 100%; }
+        button {
+            flex: 1; padding: 12px; font-size: 1.5rem; font-weight: bold;
+            border: none; border-radius: 8px; cursor: pointer; color: white;
+        }
+        .btn-minus { background-color: #d9534f; }
+        .btn-plus { background-color: #5cb85c; }
+        button:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <div id="orientation-warning">
+        <div style="font-size: 40px; margin-bottom: 10px;">📱 🔄</div>
+        <h2>Kripya mobile ko Landscape mein ghumaayein</h2>
+    </div>
+
+    <div id="app-container">
+        <!-- Box 1: CJP Counter -->
+        <div class="counter-box">
+            <img src="image.png" alt="CJP">
+            <div class="counter-value" id="count1">0</div>
+            <div class="btn-container">
+                <button class="btn-minus" onclick="updateCount(1, -1)">-</button>
+                <button class="btn-plus" onclick="updateCount(1, 1)">+</button>
+            </div>
+        </div>
+
+        <!-- Box 2: Gyanesh Kumar Counter -->
+        <div class="counter-box">
+            <img src="image_2.png" alt="Gyanesh Kumar">
+            <div class="counter-value" id="count2">0</div>
+            <div class="btn-container">
+                <button class="btn-minus" onclick="updateCount(2, -1)">-</button>
+                <button class="btn-plus" onclick="updateCount(2, 1)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let counts = { 1: 0, 2: 0 };
+        function updateCount(boxId, change) {
+            counts[boxId] += change;
+            if (counts[boxId] < 0) counts[boxId] = 0;
+            document.getElementById('count' + boxId).innerText = counts[boxId];
+        }
+        function checkOrientation() {
+            const warning = document.getElementById('orientation-warning');
+            const app = document.getElementById('app-container');
+            if (window.innerWidth > window.innerHeight) {
+                warning.style.display = 'none';
+                app.style.display = 'flex';
+            } else {
+                warning.style.display = 'flex';
+                app.style.display = 'none';
+            }
+        }
+        window.addEventListener('resize', checkOrientation);
+        window.addEventListener('load', checkOrientation);
+        window.addEventListener('orientationchange', checkOrientation);
+    </script>
+</body>
+</html>
